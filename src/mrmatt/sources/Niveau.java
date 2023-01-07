@@ -1,10 +1,6 @@
 package mrmatt.sources;
 
-import fr.rodez3il.a2022.mrmatt.sources.objets.EtatRocher;
-import fr.rodez3il.a2022.mrmatt.sources.objets.ObjetPlateau;
-import fr.rodez3il.a2022.mrmatt.sources.objets.Pomme;
-import fr.rodez3il.a2022.mrmatt.sources.objets.Rocher;
-import fr.rodez3il.a2022.mrmatt.sources.objets.Vide;
+import mrmatt.sources.objets.*;
 
 public class Niveau implements Cloneable {
 

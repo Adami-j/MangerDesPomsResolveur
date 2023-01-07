@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import fr.rodez3il.a2022.mrmatt.sources.objets.ObjetPlateau;
+
+import mrmatt.sources.objets.ObjetPlateau;
 
 
 /**
