@@ -5,6 +5,9 @@ import mrmatt.solveur.structures.ListeTableau;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -14,6 +17,7 @@ import static org.junit.Assert.*;
 public class ListeTableauTest {
 
     Liste<String> liste;
+    Liste<String> liste1;
 
     /**
      * @author Julien ADAMI
@@ -22,6 +26,7 @@ public class ListeTableauTest {
     @Before
     public void onStart(){
         liste = new ListeTableau<String>();
+        liste1 = new ListeTableau<String>();
     }
 
     @Test
@@ -96,11 +101,11 @@ public class ListeTableauTest {
     public void testEqualsNullMauvaisObject(){
         assertFalse(liste.equals(null));
         assertFalse(liste.equals(new String("cc")));
-        assertTrue(liste.equals(new ListeTableau<String>()));
-        liste.ajouter("bonjour");
-        ListeTableau<Integer> listeTest = new ListeTableau<Integer>();
-        listeTest.ajouter(1);
-        System.out.println(liste.equals(listeTest));
+
+        assertTrue(liste.equals(liste1));
+        liste1.ajouter("bonjour");
+        assertFalse(liste1.equals(liste));
+        assertFalse(liste.equals(liste1));
 
     }
 
