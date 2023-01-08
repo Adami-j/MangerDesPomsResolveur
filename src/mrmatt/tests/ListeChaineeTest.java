@@ -83,14 +83,14 @@ public class ListeChaineeTest {
 
     @Test
     public void testContient() {
-        ListeChainee<String> liste = new ListeChainee<String>();
+
         liste.ajouter("test1");
         liste.ajouter("test2");
         liste.ajouter("test3");
         System.out.println( liste.toString());
         assertTrue(liste.contient("test1"));
         assertTrue(liste.contient("test3"));
-        assertFalse(liste.contient("test1"));
+        assertFalse(liste.contient("test4"));
 
     }
 
@@ -106,6 +106,14 @@ public class ListeChaineeTest {
         liste.ajouter("test1");
         assertFalse(liste.estVide());
 
+    }
+
+    @Test
+    public void testRetierElement(){
+        liste.ajouter("test1");
+        assertTrue(liste.contient("test1"));
+        liste.enlever(0);
+        assertFalse(liste.contient("test1"));
     }
 
 

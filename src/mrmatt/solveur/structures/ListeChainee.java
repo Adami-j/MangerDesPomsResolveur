@@ -50,10 +50,8 @@ public class ListeChainee<T> implements Liste<T> {
         if (this.estVide()) {
             tete = nouveauMaillon;
         } else {
-            Maillon maillonTete = tete;
-            for (int i = 0; i < tailleListeChainee-1; i++) {
-                maillonTete = maillonTete.suivant;
-            }
+            Maillon maillonTete = this.getTete();
+
             maillonTete.suivant = nouveauMaillon;
         }
         tailleListeChainee++;
@@ -84,28 +82,50 @@ public class ListeChainee<T> implements Liste<T> {
     @Override
     public T enlever(int i) {
         this.outOfBound(i);
-
-        T donne;
-
-        if(this.estVide()){
-            donne = this.tete.donnee;
-            this.tete=null;
-            return donne;
-        }else {
-            Maillon postMaillon = this.tete;
-            int j = 0;
-            while (j<i-1){
-                postMaillon = postMaillon.suivant;
-                j++;
+        T elementSupprime;
+        if (i == 0) {
+            elementSupprime = tete.donnee;
+            tete = tete.suivant;
+        } else {
+            Maillon maillonPrecedent = getMaillon(i - 1);
+            elementSupprime = maillonPrecedent.suivant.donnee;
+            maillonPrecedent.suivant = maillonPrecedent.suivant.suivant;
+            for (int id = i; id < this.tailleListeChainee - 1; id++) {
+                Maillon maillon = getMaillon(i);
+                maillon.donnee = maillon.suivant.donnee;
             }
-            donne = postMaillon.suivant.donnee;
-            postMaillon.suivant = postMaillon.suivant.suivant;
         }
         this.tailleListeChainee--;
-        return donne;
+        return elementSupprime;
     }
 
+    /**
+     * @author Julien ADAMI
+     * @param indice
+     * @return
+     */
+    private Maillon getMaillon(int indice) {
+        this.outOfBound(indice);
+        Maillon maillon = tete;
+        for (int i = 0; i < indice; i++) {
+            maillon = maillon.suivant;
+        }
+        return maillon;
+    }
 
+    private Maillon getTete(){
+        Maillon maillonTete = this.tete;
+        for (int i = 0; i < tailleListeChainee-1; i++) {
+            maillonTete = maillonTete.suivant;
+        }
+        return maillonTete;
+    }
+
+    /**
+     * @author Julien ADAMI
+     * @param i
+     * @return element à la position i
+     */
     @Override
     public T element(int i) {
         this.outOfBound(i);
@@ -120,18 +140,21 @@ public class ListeChainee<T> implements Liste<T> {
         return maillonTmp.donnee;
     }
 
-
+    /**
+     * @author Julien ADAMI
+     * @param e L'élément à comparer.
+     * @return
+     */
     @Override
     public boolean contient(T e) {
         if(e==null){
             return false;
         }
-        Maillon maillonTmp = this.tete;
-        while(maillonTmp!=null){
-            if(maillonTmp.donnee.equals(e)){
+
+        for (Maillon maillonTete = tete; maillonTete != null; maillonTete = maillonTete.suivant) {
+            if (maillonTete.donnee.equals(e)) {
                 return true;
             }
-            maillonTmp = maillonTmp.suivant;
         }
         return false;
 
