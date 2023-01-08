@@ -4,7 +4,6 @@ import java.util.LinkedList;
 
 public class ListeChainee<T> implements Liste<T> {
 
-    LinkedList<T> liste;
     /**
      *
      */
@@ -16,6 +15,18 @@ public class ListeChainee<T> implements Liste<T> {
             this.donnee=donnee;
             this.suivant=suivant;
         }
+
+        public T getDonnee() {
+            return donnee;
+        }
+
+
+
+        public Maillon getSuivant() {
+            return suivant;
+        }
+
+
     }
 
     /**
@@ -104,7 +115,7 @@ public class ListeChainee<T> implements Liste<T> {
      * @param indice
      * @return
      */
-    private Maillon getMaillon(int indice) {
+    public Maillon getMaillon(int indice) {
         this.outOfBound(indice);
         Maillon maillon = tete;
         for (int i = 0; i < indice; i++) {
@@ -113,7 +124,7 @@ public class ListeChainee<T> implements Liste<T> {
         return maillon;
     }
 
-    private Maillon getTete(){
+    public Maillon getTete(){
         Maillon maillonTete = this.tete;
         for (int i = 0; i < tailleListeChainee-1; i++) {
             maillonTete = maillonTete.suivant;
@@ -196,6 +207,8 @@ public class ListeChainee<T> implements Liste<T> {
         }
         return true;
     }
+
+
 
     @Override
     public String toString() {
