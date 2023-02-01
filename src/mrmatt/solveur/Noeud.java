@@ -1,7 +1,7 @@
 package mrmatt.solveur;
 
-
 import mrmatt.solveur.structures.DictionnaireChaine;
+import mrmatt.solveur.structures.ListeTableau;
 import mrmatt.sources.Commande;
 import mrmatt.sources.Niveau;
 
@@ -9,96 +9,120 @@ import mrmatt.sources.Niveau;
 
 public class Noeud {
 
-    class Fils{
-
-    }
-    private DictionnaireChaine<Configuration,String> dictionnaireChaine;
+    private DictionnaireChaine<String, Noeud> dictionnaireChaine;
     private  Niveau niveauActuel;
 
-    private Noeud filsHaut;
-    private Noeud filsBas;
-    private Noeud filsGauch;
-    private Noeud filsDroit;
+    private ListeTableau<Noeud> listeFils;
 
     private String commandes;
+    private boolean visite;
 
-    public Noeud(DictionnaireChaine<Configuration, String> dictionnaireChaine, String commandes, Niveau niveauActuel) {
+    public Noeud(DictionnaireChaine<String, Noeud> dictionnaireChaine, String commandes, Niveau niveauActuel) {
         this.dictionnaireChaine = dictionnaireChaine;
         this.commandes = commandes;
         this.niveauActuel = niveauActuel;
+        this.listeFils = new ListeTableau<Noeud>();
+        this.visite = false;
+    }
+
+    public boolean isVisite() {
+        return visite;
+    }
+
+    public DictionnaireChaine<String, Noeud> getDictionnaireChaine() {
+        return dictionnaireChaine;
+    }
+
+    public String getCommandes() {
+        return commandes;
     }
 
     public Niveau getNiveauActuel() {
         return niveauActuel;
     }
 
-    public Noeud getFilsHaut() {
-        return filsHaut;
+    public void setDictionnaireChaine(DictionnaireChaine<String, Noeud> dictionnaireChaine) {
+        this.dictionnaireChaine = dictionnaireChaine;
     }
 
-    public Noeud getFilsBas() {
-        return filsBas;
+    public ListeTableau<Noeud> getListeFils() {
+        return listeFils;
     }
 
-    public Noeud getFilsGauch() {
-        return filsGauch;
-    }
 
-    public Noeud getFilsDroit() {
-        return filsDroit;
-    }
+    public String calculerFils(){
+        String solution = null;
+        String commandes = this.commandes;
+        Niveau niveauActuel = this.niveauActuel;
+        DictionnaireChaine<String, Noeud> dictionnaireChaine = this.dictionnaireChaine;
+        this.visite = true;
 
-    public void setFilsHaut(Noeud filsHaut) {
-        this.filsHaut = filsHaut;
-    }
+        for(int i = 0; i < 4; i++){
+             solution = null;
+            Niveau niveau = niveauActuel.copier();
+            String commande = "";
+            switch (i){
+                case 0:
+                    if(niveau.deplacementPossible(Commande.HAUT) && niveau.enCours()){
+                        niveau.deplacer(Commande.HAUT);
+                        commande = "H";
+                    }
 
-    public void setFilsBas(Noeud filsBas) {
-        this.filsBas = filsBas;
-    }
+                    break;
+                case 1:
 
-    public void setFilsGauch(Noeud filsGauch) {
-        this.filsGauch = filsGauch;
-    }
+                    if(niveau.deplacementPossible(Commande.BAS) && niveau.enCours()){
+                        niveau.deplacer(Commande.BAS);
+                        commande = "B";
+                    }
+                    break;
+                case 2:
+                    if(niveau.deplacementPossible(Commande.GAUCHE) && niveau.enCours()){
+                        niveau.deplacer(Commande.GAUCHE);
+                        commande = "G";
+                    }
+                    break;
+                case 3:
+                    if(niveau.deplacementPossible(Commande.DROITE) && niveau.enCours()){
+                        niveau.deplacer(Commande.DROITE);
+                        commande = "D";
+                    }
+                    break;
+            }
 
-    public void setFilsDroit(Noeud filsDroit) {
-        this.filsDroit = filsDroit;
-    }
 
-    public void calculerFils(){
-        if(this.getNiveauActuel().deplacementPossible(Commande.HAUT)){
-            Niveau niveauHaut = this.getNiveauActuel().copier();
-            niveauHaut.deplacer(Commande.HAUT);
-            this.setFilsHaut(new Noeud(this.dictionnaireChaine,this.commandes+"H",niveauHaut));
+            niveau.calcule();
+            if(niveau.estGagnant()){
+               solution = commandes+commande;
+
+            }else {
+
+                Noeud noeud;
+                if (dictionnaireChaine.contient(niveau.valeurChaine())) {
+                    noeud = dictionnaireChaine.valeur(niveau.valeurChaine());
+                    if(noeud.getCommandes().startsWith("DBGDDDDHH")){
+                        System.out.println("ma bite");
+                    }
+                } else {
+                    noeud = new Noeud(dictionnaireChaine, commandes + commande, niveau);
+                    dictionnaireChaine.inserer(niveau.valeurChaine(), noeud);
+                    noeud.setDictionnaireChaine(dictionnaireChaine);
+                    if(noeud.getCommandes().startsWith("DBGDDDDHH")){
+                        System.out.println("ma bite");
+                    }
+                }
+
+
+
+                    listeFils.ajouter(noeud);
+
+
+            }
         }
-        if(this.getNiveauActuel().deplacementPossible(Commande.BAS)){
-            Niveau niveauBas = this.getNiveauActuel().copier();
-            niveauBas.deplacer(Commande.BAS);
-            this.setFilsBas( new Noeud(this.dictionnaireChaine,this.commandes+"B",niveauBas));
-        }
-        if(this.getNiveauActuel().deplacementPossible(Commande.GAUCHE)){
-            Niveau niveauGauche = this.getNiveauActuel().copier();
-            niveauGauche.deplacer(Commande.GAUCHE);
-            this.setFilsGauch(new Noeud(this.dictionnaireChaine,this.commandes+"G",niveauGauche));
-        }
-        if(this.getNiveauActuel().deplacementPossible(Commande.DROITE)){
-            Niveau niveauDroit = this.getNiveauActuel().copier();
-            niveauDroit.deplacer(Commande.DROITE);
-            this.setFilsDroit(new Noeud(this.dictionnaireChaine,this.commandes+"D",niveauDroit));
-        }
+
+        return solution;
 
     }
 
 
-    public boolean equals(Object o){
-        if(o==null){
-            return false;
-        }
-        if(o.getClass()!=this.getClass()){
-            return false;
-        }
-        Noeud n = (Noeud) o;
-        return n==this;
-
     }
-
-}
