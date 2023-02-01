@@ -1,0 +1,3 @@
+Question : quel est le type du tableau à utiliser ?
+Question : Selon vous, quelles sont les différences majeures entre ListeTableau et ListeChainee ?
+Question : dans votre code, le type statique de vos références de liste et dictionnaires est-il celui de vos implémentations concrètes ? Pourquoi ?
