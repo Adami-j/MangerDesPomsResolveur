@@ -7,33 +7,44 @@ import mrmatt.sources.Niveau;
 
 public class Solveur {
 
-private static ListeTableau<Noeud> noeudTraiter;
+	/**
+	 * @author Julien ADAMI
+	 * déclaration des paramètres listes/dico nécessaires à la fonction trouver solution
+	 * tous les param sont en statique pour pouvoir être utilisés dans la fonction elle même statique
+	 */
+	private static ListeTableau<Noeud> noeudTraiter;
 private static ListeTableau<Noeud> noeudATraiter;
 private static DictionnaireChaine<String,Noeud> dictionnaireChaineNoeudTraiter;
 private static ListeChainee<String> listeDesSolutions;
+
+	/**
+	 * @author Julien ADAMI
+	 * @param niveau
+	 * @return
+	 */
 	public static String trouverSolution(Niveau niveau) {
-		dictionnaireChaineNoeudTraiter = new DictionnaireChaine<String,Noeud>();
+		Solveur.dictionnaireChaineNoeudTraiter = new DictionnaireChaine<String,Noeud>();
 		Noeud noeud = new Noeud(dictionnaireChaineNoeudTraiter,"",niveau);
-		listeDesSolutions = new ListeChainee<String>();
-		noeudTraiter = new ListeTableau<Noeud>();
-		noeudATraiter = new ListeTableau<Noeud>();
-		noeudATraiter.ajouter(noeud);
+		Solveur.listeDesSolutions = new ListeChainee<String>();
+		Solveur.noeudTraiter = new ListeTableau<Noeud>();
+		Solveur.noeudATraiter = new ListeTableau<Noeud>();
+		Solveur.noeudATraiter.ajouter(noeud);
 		String solution = null;
-		while(!noeudATraiter.estVide()){
+		while(!Solveur.noeudATraiter.estVide()){
 
 			Noeud noeud1 = noeudATraiter.element(0);
-			noeudTraiter.ajouter(noeud1);
-			noeudATraiter.enlever(0);
+			Solveur.noeudTraiter.ajouter(noeud1);
+			Solveur.noeudATraiter.enlever(0);
 			solution = noeud1.calculerFils();
 			if(solution != null){
-				listeDesSolutions.ajouter(solution);
+				Solveur.listeDesSolutions.ajouter(solution);
 			}else{
 				ListeTableau<Noeud> listeFils = noeud1.getListeFils();
 				for(int i = 0; i < listeFils.taille(); i++){
 					Noeud noeud2 = listeFils.element(i);
 
-					if(!noeudTraiter.contient(noeud2) && !noeudATraiter.contient(noeud2)&& !noeud2.isVisite()){
-						noeudATraiter.ajouter(noeud2);
+					if(!Solveur.noeudTraiter.contient(noeud2) && !Solveur.noeudATraiter.contient(noeud2)&& !noeud2.isVisite()){
+						Solveur.noeudATraiter.ajouter(noeud2);
 
 					}
 
@@ -43,9 +54,13 @@ private static ListeChainee<String> listeDesSolutions;
 
 		}
 
-		return listeDesSolutions.getMaillon(0).getDonnee();
+		return Solveur.listeDesSolutions.getMaillon(0).getDonnee();
 	}
-	
+
+	/**
+	 * @author Julien ADAMI
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		String solution = trouverSolution(new Niveau("src/niveaux/1rocher.txt"));
 		if (solution == null) {
@@ -53,8 +68,8 @@ private static ListeChainee<String> listeDesSolutions;
 		} else {
 			System.out.println("Une solution est : " + solution+"\n");
 			System.out.println("Voici toutes les solutions :");
-			for(int i = 0; i < listeDesSolutions.taille(); i++){
-				System.out.println("      Solution "+i+" : "+listeDesSolutions.getMaillon(i).getDonnee());
+			for(int i = 0; i < Solveur.listeDesSolutions.taille(); i++){
+				System.out.println("      Solution "+(i+1)+" : "+Solveur.listeDesSolutions.getMaillon(i).getDonnee());
 			}
 		}
 	}
