@@ -1,13 +1,11 @@
 package mrmatt.solveur.structures;
 
-import java.util.LinkedList;
-
 public class ListeChainee<T> implements Liste<T> {
 
     /**
      *
      */
-    class Maillon {
+    public class Maillon {
         private T donnee;
         private Maillon suivant;
 
@@ -182,6 +180,10 @@ public class ListeChainee<T> implements Liste<T> {
         if (i < 0 || i >= this.taille()) {
             throw new IndexOutOfBoundsException("Indice incorrect");
         }
+    }
+
+    public int getTailleListeChainee() {
+        return tailleListeChainee;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package mrmatt.solveur.structures;
 
-
-
 import java.util.Arrays;
 
 
@@ -32,11 +30,11 @@ public class ListeTableau<E> implements Liste<E> {
         if(element==null || !element.getClass().equals(element.getClass())){
             throw new IllegalArgumentException("Element invalide");
         }
-        if (this.taille() == elements.length) {
-            elements = Arrays.copyOf(elements, this.taille()*2);
+        if (this.taille() == this.elements.length) {
+            this.elements = Arrays.copyOf(this.elements, this.taille()*2);
         }
 
-            elements[nombreElements] = element;
+            this.elements[this.nombreElements] = element;
             this.nombreElements++;
     }
 
@@ -61,10 +59,10 @@ public class ListeTableau<E> implements Liste<E> {
     @Override
     public E enlever(int i) {
         this.outOfBound(i);
-        E element = elements[i];
-        elements[i] = null;
+        E element = this.elements[i];
+        this.elements[i] = null;
         for(int j = i; j<this.nombreElements-1;j++){
-            elements[j]=elements[j+1];
+            this.elements[j]=this.elements[j+1];
 
         }
         this.nombreElements--;
@@ -80,7 +78,7 @@ public class ListeTableau<E> implements Liste<E> {
     @Override
     public E element(int i) {
         this.outOfBound(i);
-        return elements[i];
+        return this.elements[i];
     }
 
     /**
@@ -93,7 +91,7 @@ public class ListeTableau<E> implements Liste<E> {
     public boolean contient(E e) {
         boolean contient = false;
         for (int i = 0; i < this.taille(); i++) {
-            if (elements[i].equals(e)) {
+            if (this.elements[i].equals(e)) {
                 contient =true;
             }
         }
@@ -113,6 +111,7 @@ public class ListeTableau<E> implements Liste<E> {
         }
     }
 
+    @Override
     public boolean equals(Object listeTableau) {
 
         if (listeTableau == null || this.getClass() != listeTableau.getClass()) {
@@ -130,7 +129,7 @@ public class ListeTableau<E> implements Liste<E> {
 
         for (int i = 0; i < taille; i++) {
 
-            if (!elements[i].equals(listeTableau1.elements[i])||elements[i]==null) {
+            if (!this.elements[i].equals(listeTableau1.elements[i])||this.elements[i]==null) {
                 return false;
             }
         }
@@ -139,13 +138,11 @@ public class ListeTableau<E> implements Liste<E> {
 
     }
 
-
-
-
+    @Override
     public String toString() {
         String res = "";
         for (int i = 0; i < this.taille(); i++) {
-            res +="Element "+i+" : "+ elements[i] + " ";
+            res +="Element "+i+" : "+ this.elements[i] + " ";
         }
         return res;
     }
