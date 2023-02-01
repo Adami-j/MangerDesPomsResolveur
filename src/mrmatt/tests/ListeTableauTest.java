@@ -5,9 +5,6 @@ import mrmatt.solveur.structures.ListeTableau;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 /**
@@ -45,9 +42,6 @@ public class ListeTableauTest {
     public void testEstVide() throws Exception {
         assertTrue(liste.estVide());
     }
-
-
-
 
     @Test
     public void testEstVideFaux() throws Exception {
