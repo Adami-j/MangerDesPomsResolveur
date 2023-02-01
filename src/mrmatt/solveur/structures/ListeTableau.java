@@ -28,6 +28,7 @@ public class ListeTableau<E> implements Liste<E> {
     public void ajouter(E element) throws IllegalArgumentException{
         this.illegalArgument(element);
         if (this.taille() == this.elements.length) {
+            //on peut aussi utiliser System.arraycopy
             this.elements = Arrays.copyOf(this.elements, this.taille()*2);
         }
 
