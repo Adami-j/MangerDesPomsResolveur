@@ -145,14 +145,5 @@ public class ListeTableau<E> implements Liste<E> {
         }
         return true;
     }
-
-    @Override
-    public String toString() {
-        String res = "";
-        for (int i = 0; i < this.taille(); i++) {
-            res +="Element "+i+" : "+ this.elements[i] + " ";
-        }
-        return res;
-    }
-
+    
 }

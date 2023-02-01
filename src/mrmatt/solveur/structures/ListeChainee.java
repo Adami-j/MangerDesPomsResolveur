@@ -18,13 +18,6 @@ public class ListeChainee<T> implements Liste<T> {
             return donnee;
         }
 
-
-
-        public Maillon getSuivant() {
-            return suivant;
-        }
-
-
     }
 
     /**
@@ -57,7 +50,7 @@ public class ListeChainee<T> implements Liste<T> {
     public void ajouter(T element) {
         Maillon nouveauMaillon = new Maillon(element, null);
         if (this.estVide()) {
-            tete = nouveauMaillon;
+            this.tete = nouveauMaillon;
         } else {
             Maillon maillonTete = this.getTete();
 
@@ -188,9 +181,7 @@ public class ListeChainee<T> implements Liste<T> {
 
     @Override
     public boolean equals(Object listeChainee) {
-        if (this == listeChainee) {
-            return true;
-        }
+
         if (listeChainee == null || getClass() != listeChainee.getClass()) {
             return false;
         }
@@ -210,18 +201,5 @@ public class ListeChainee<T> implements Liste<T> {
         return true;
     }
 
-
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        Maillon courant = this.tete;
-        while (courant != null) {
-            sb.append(courant.donnee);
-            sb.append(" ");
-            courant = courant.suivant;
-        }
-        return sb.toString();
-    }
 }
 

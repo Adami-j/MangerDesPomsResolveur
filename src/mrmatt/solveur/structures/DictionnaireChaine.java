@@ -19,12 +19,11 @@ public class DictionnaireChaine<C, V> implements Dictionnaire<C, V> {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
+
             if (o == null || getClass() != o.getClass()) return false;
-            Entree<?, ?> entree = (Entree<?, ?>) o;
+            Entree<C, V> entree = (Entree<C, V>) o;
             return cle==entree.cle;
         }
-
 
     }
 
@@ -32,8 +31,8 @@ public class DictionnaireChaine<C, V> implements Dictionnaire<C, V> {
     int tailleDico ;
 
     public DictionnaireChaine(){
-        listeChainee = new ListeChainee<Entree<C,V>>();
-        tailleDico=0;
+        this.listeChainee = new ListeChainee<Entree<C,V>>();
+        this.tailleDico=0;
     }
 
     /**
@@ -51,8 +50,8 @@ public class DictionnaireChaine<C, V> implements Dictionnaire<C, V> {
             throw new IllegalArgumentException();
         }
 
-        listeChainee.ajouter(new Entree<C, V>(cle,valeur));
-        tailleDico++;
+        this.listeChainee.ajouter(new Entree<C, V>(cle,valeur));
+        this.tailleDico++;
     }
 
     /**
@@ -66,7 +65,7 @@ public class DictionnaireChaine<C, V> implements Dictionnaire<C, V> {
         boolean res = false;
 
         for(int i = 0; i<tailleDico;i++){
-            if(listeChainee.getMaillon(i).getDonnee().cle.equals(cle)){
+            if(this.listeChainee.getMaillon(i).getDonnee().cle.equals(cle)){
                  res = true;
             }
         }
@@ -90,9 +89,9 @@ public class DictionnaireChaine<C, V> implements Dictionnaire<C, V> {
         this.illegalCleArgumentException(cle);
         V valeur = null;
 
-        for(int i = 0; i<tailleDico;i++){
-            if(listeChainee.getMaillon(i).getDonnee().cle.equals(cle)){
-                valeur = listeChainee.getMaillon(i).getDonnee().valeur;
+        for(int i = 0; i<this.tailleDico;i++){
+            if(this.listeChainee.getMaillon(i).getDonnee().cle.equals(cle)){
+                valeur = this.listeChainee.getMaillon(i).getDonnee().valeur;
             }
         }
         return valeur;
