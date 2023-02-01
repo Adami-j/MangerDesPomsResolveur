@@ -49,7 +49,13 @@ public class Noeud {
         return listeFils;
     }
 
-
+    /**
+     * @author Julien ADAMI
+     * @return la solution si elle existe, null sinon
+     * algo de base : parcours le noeud et on regarde pour chaque commande si elle est possible
+     * si oui on la fait et on regarde si on à gagné, si oui on retourne la solution si elle n'existe pas
+     *A la fin avant de retourner la solution, on ajoute le noeud dans le dictionnaire avec la commande associée
+     */
     public String calculerFils(){
         String solution = null;
         String commandes = this.commandes;
@@ -57,72 +63,57 @@ public class Noeud {
         DictionnaireChaine<String, Noeud> dictionnaireChaine = this.dictionnaireChaine;
         this.visite = true;
 
+        // autre solution, faire une enumération des commandes
         for(int i = 0; i < 4; i++){
              solution = null;
-            Niveau niveau = niveauActuel.copier();
+            Niveau nouveauNiveau = niveauActuel.copier();
             String commande = "";
             switch (i){
                 case 0:
-                    if(niveau.deplacementPossible(Commande.HAUT) && niveau.enCours()){
-                        niveau.deplacer(Commande.HAUT);
+                    if(nouveauNiveau.deplacementPossible(Commande.HAUT) && nouveauNiveau.enCours()){
+                        nouveauNiveau.deplacer(Commande.HAUT);
                         commande = "H";
                     }
 
                     break;
                 case 1:
 
-                    if(niveau.deplacementPossible(Commande.BAS) && niveau.enCours()){
-                        niveau.deplacer(Commande.BAS);
+                    if(nouveauNiveau.deplacementPossible(Commande.BAS) && nouveauNiveau.enCours()){
+                        nouveauNiveau.deplacer(Commande.BAS);
                         commande = "B";
                     }
                     break;
                 case 2:
-                    if(niveau.deplacementPossible(Commande.GAUCHE) && niveau.enCours()){
-                        niveau.deplacer(Commande.GAUCHE);
+                    if(nouveauNiveau.deplacementPossible(Commande.GAUCHE) && nouveauNiveau.enCours()){
+                        nouveauNiveau.deplacer(Commande.GAUCHE);
                         commande = "G";
                     }
                     break;
                 case 3:
-                    if(niveau.deplacementPossible(Commande.DROITE) && niveau.enCours()){
-                        niveau.deplacer(Commande.DROITE);
+                    if(nouveauNiveau.deplacementPossible(Commande.DROITE) && nouveauNiveau.enCours()){
+                        nouveauNiveau.deplacer(Commande.DROITE);
                         commande = "D";
                     }
                     break;
             }
+            // on calcule l'état du nouveau niveau après avoir jouer la commande
+            nouveauNiveau.calcule();
 
-
-            niveau.calcule();
-            if(niveau.estGagnant()){
+            if(nouveauNiveau.estGagnant()){
                solution = commandes+commande;
-
             }else {
-
                 Noeud noeud;
-                if (dictionnaireChaine.contient(niveau.valeurChaine())) {
-                    noeud = dictionnaireChaine.valeur(niveau.valeurChaine());
-                    if(noeud.getCommandes().startsWith("DBGDDDDHH")){
-                        System.out.println("ma bite");
-                    }
+                if (this.getDictionnaireChaine().contient(nouveauNiveau.valeurChaine())) {
+                    noeud = this.getDictionnaireChaine().valeur(nouveauNiveau.valeurChaine());
                 } else {
-                    noeud = new Noeud(dictionnaireChaine, commandes + commande, niveau);
-                    dictionnaireChaine.inserer(niveau.valeurChaine(), noeud);
+                    noeud = new Noeud(this.getDictionnaireChaine(), this.getCommandes() + commande, nouveauNiveau);
+                    this.getDictionnaireChaine().inserer(nouveauNiveau.valeurChaine(), noeud);
                     noeud.setDictionnaireChaine(dictionnaireChaine);
-                    if(noeud.getCommandes().startsWith("DBGDDDDHH")){
-                        System.out.println("ma bite");
-                    }
                 }
-
-
-
-                    listeFils.ajouter(noeud);
-
-
+                this.getListeFils().ajouter(noeud);
             }
         }
-
         return solution;
-
     }
 
-
-    }
+}
