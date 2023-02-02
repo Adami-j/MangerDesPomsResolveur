@@ -60,6 +60,7 @@ private static ListeChainee<String> listeDesSolutions;
 	/**
 	 * @author Julien ADAMI
 	 * @param args
+	 * affichage des solutions en utilisant trouverSolution
 	 */
 	public static void main(String[] args) {
 		String solution = trouverSolution(new Niveau("src/niveaux/1rocher.txt"));
@@ -71,6 +72,7 @@ private static ListeChainee<String> listeDesSolutions;
 			for(int i = 0; i < Solveur.listeDesSolutions.taille(); i++){
 				System.out.println("      Solution "+(i+1)+" : "+Solveur.listeDesSolutions.getMaillon(i).getDonnee());
 			}
+
 		}
 	}
 
