@@ -1,13 +1,14 @@
 package mrmatt.tests;
-
 import mrmatt.solveur.structures.DictionnaireChaine;
 import org.junit.Test;
-
-
 import org.junit.Before;
 
 import static org.junit.Assert.*;
 
+/**
+ * @author Julien ADAMI
+ * Classe de test de la classe DictionnaireChainee
+ */
 public class DictionnaireChaineeTest {
 
         private DictionnaireChaine<String, Integer> dict;

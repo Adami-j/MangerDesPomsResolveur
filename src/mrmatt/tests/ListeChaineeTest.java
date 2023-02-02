@@ -8,7 +8,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-
+/**
+ * @author Julien ADAMI
+ * Classe de test de la classe ListeChainee
+ */
 public class ListeChaineeTest {
     ListeChainee<String> liste;
 
