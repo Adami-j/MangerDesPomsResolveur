@@ -25,3 +25,4 @@ sinon, j'aurai pu utiliser "Liste<Noeud> listeDeNoeuds = new ListeTableau<Noeud>
 Sujet sympa pour approcher les types de structure de données,
 mais j'ai pas mal galérer sur la réalisation de l'algo pour trouver les solution (calculer fils n'était pas en soi compliquer si on modélisait correctement les noeuds)
 Pour un prochain projet, réaliser une optimisation de l'algo pour trouver la solution de niveaux plus conséquent pourrait être intéressant.
+
